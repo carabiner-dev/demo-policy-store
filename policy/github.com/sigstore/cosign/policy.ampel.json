@@ -1,0 +1,33 @@
+{
+    "id": "sbom",
+    "metadata": {
+        "runtime": "cel@v0"
+    },
+    "policies": [
+        {
+            "id": "has-sbom",
+            "meta": {
+                "description": "Ensure the artifact's dependencies are listed in an SBOM'",
+                "assert_mode": "OR"
+            },
+            "tenets": [
+                {
+                    "code": "size(predicates) > 0",
+                    "predicates": {
+                        "types": [
+                            "https://spdx.dev/Document",
+                            "https://cyclonedx.org/bom"
+                        ]
+                    },
+                    "assessment": {
+                        "message": "SBOM is supplied"
+                    },
+                    "error": {
+                        "message": "No SBOM found for the specified artifact",
+                        "guidance": "Generate an SBOM and make it available along with the artifact"
+                    }
+                }
+            ]
+        }
+    ]
+}
